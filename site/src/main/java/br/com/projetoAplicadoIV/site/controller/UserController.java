@@ -19,7 +19,8 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public void createUser(@RequestBody NewUserDTO newUser) {
-        userService.saveUser(newUser);
+    public String createUser(@RequestBody NewUserDTO newUser) {
+        System.out.println("Ain't even working here");
+        return userService.saveUser(newUser);
     }
 }
