@@ -2,6 +2,7 @@ package br.com.projetoAplicadoIV.site.service;
 
 import br.com.projetoAplicadoIV.site.entity.User;
 import br.com.projetoAplicadoIV.site.entity.dto.NewUserDTO;
+import br.com.projetoAplicadoIV.site.entity.dto.UpdateUserDTO;
 import br.com.projetoAplicadoIV.site.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +20,13 @@ public class UserService {
     }
 
     public String saveUser(NewUserDTO newUser) {
-        Optional<User> existentUser = userRepository.findByCPF(newUser.getCpf());
-
-        if(existentUser.isPresent()) {
-            return "User already exists.";
-        }
-
         if(userDataVerification.checkEmptyFields(newUser)) {
             return userDataVerification.getMessage();
         } else {
+            if(checkForUser(newUser.getCpf()).isPresent()) {
+                return "User already exists.";
+            }
+
             User user = new User();
             user.setCpf(newUser.getCpf());
             user.setEmail(newUser.getEmail());
@@ -37,5 +36,26 @@ public class UserService {
             userRepository.save(user);
         }
         return "Success";
+    }
+
+    public String updateUser(UpdateUserDTO user, Long id) {
+        Optional<User> existingUser = userRepository.findById(id);
+        return "";
+    }
+
+    public String deleteUser(String cpf) {
+        Optional<User> user = checkForUser(cpf);
+
+        if(user.isPresent()) {
+            userRepository.delete(user.get());
+            return "User deleted successfully.";
+        }
+
+        return "User with CPF " + cpf + " does not exist.";
+    }
+
+    public Optional<User> checkForUser(String cpf) {
+        Optional<User> user = userRepository.findByCPF(cpf);
+        return user;
     }
 }
