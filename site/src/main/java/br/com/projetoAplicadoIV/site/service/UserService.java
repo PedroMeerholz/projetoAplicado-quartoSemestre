@@ -11,9 +11,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserDataVerification userDataVerification;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserDataVerification userDataVerification) {
         this.userRepository = userRepository;
+        this.userDataVerification = userDataVerification;
     }
 
     public String saveUser(NewUserDTO newUser) {
@@ -23,14 +25,17 @@ public class UserService {
             return "User already exists.";
         }
 
-        User user = new User();
-        user.setCpf(newUser.getCpf());
-        user.setEmail(newUser.getEmail());
-        user.setName(newUser.getName());
-        user.setPassword(newUser.getPassword());
+        if(userDataVerification.checkEmptyFields(newUser)) {
+            return userDataVerification.getMessage();
+        } else {
+            User user = new User();
+            user.setCpf(newUser.getCpf());
+            user.setEmail(newUser.getEmail());
+            user.setName(newUser.getName());
+            user.setPassword(newUser.getPassword());
 
-        userRepository.save(user);
-
+            userRepository.save(user);
+        }
         return "Success";
     }
 }
