@@ -20,7 +20,6 @@ public class UserController {
 
     @PostMapping("/create")
     public String createUser(@RequestBody NewUserDTO newUser) {
-        System.out.println("Ain't even working here");
         return userService.saveUser(newUser);
     }
 }
