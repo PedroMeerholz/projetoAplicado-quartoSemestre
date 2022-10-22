@@ -38,9 +38,35 @@ public class UserService {
         return "Success";
     }
 
-    public String updateUser(UpdateUserDTO user, Long id) {
-        Optional<User> existingUser = userRepository.findById(id);
-        return "";
+    public String updateUser(UpdateUserDTO user, String cpf) {
+        Optional<User> existingUser = checkForUser(cpf);
+
+        if(existingUser.isPresent()) {
+            User usr = existingUser.get();
+
+            if(userDataVerification.isEmptyString(user.getEmail())) {
+                usr.setEmail(usr.getEmail());
+            } else {
+                usr.setEmail(user.getEmail());
+            }
+
+            if(userDataVerification.isEmptyString(user.getName())) {
+                usr.setName(usr.getName());
+            } else {
+                usr.setName(user.getName());
+            }
+
+            if(userDataVerification.isEmptyString(user.getPassword())) {
+                usr.setPassword(usr.getPassword());
+            } else {
+                usr.setPassword(user.getPassword());
+            }
+
+            userRepository.save(usr);
+            return "User updated successfully.";
+        }
+
+        return "User with CPF '" + cpf + "' does not exist.";
     }
 
     public String deleteUser(String cpf) {
