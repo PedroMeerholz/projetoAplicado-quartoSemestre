@@ -31,7 +31,7 @@ public class UserDataVerification {
     }
 
     public boolean isEmptyString(String string) {
-        if(string.trim().isBlank()) {
+        if(string == null || string.trim().isBlank()) {
             return true;
         }
         return false;
