@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{cpf}")
-    public String updateUser(@RequestBody UpdateUserDTO prevUser, @PathVariable("cpf") Long cpf) {
+    public String updateUser(@RequestBody UpdateUserDTO prevUser, @PathVariable("cpf") String cpf) {
         return userService.updateUser(prevUser, cpf);
     }
 
