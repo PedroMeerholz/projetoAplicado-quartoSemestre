@@ -1,13 +1,22 @@
 package br.com.projetoAplicadoIV.site.service;
 
 import br.com.projetoAplicadoIV.site.entity.dto.NewUserDTO;
+import br.com.projetoAplicadoIV.site.entity.dto.UpdateUserDTO;
+import org.hibernate.sql.Update;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserDataVerification {
     private String message = "";
     public boolean checkEmptyFields(NewUserDTO newUser) {
-        if(verifyCpf(newUser.getCpf()) || verifyEmail(newUser.getEmail()) || verifyName(newUser.getName()) || verifyPassword(newUser.getPassword())) {
+        if(!verifyCpf(newUser.getCpf()) || !verifyEmail(newUser.getEmail()) || !verifyName(newUser.getName()) || !verifyPassword(newUser.getPassword())) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean validateUpdate(UpdateUserDTO user) {
+        if(!verifyEmail(user.getEmail()) || !verifyName(user.getName()) || !verifyPassword(user.getPassword())) {
             return true;
         }
         return false;
