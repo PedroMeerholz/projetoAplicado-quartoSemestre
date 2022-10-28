@@ -44,19 +44,12 @@ public class UserService {
         if(existingUser.isPresent()) {
             User usr = existingUser.get();
 
-            if(!userDataVerification.isEmptyString(user.getEmail())) {
-                usr.setEmail(user.getEmail());
-            }
-            if(!userDataVerification.isEmptyString(user.getName())) {
-                usr.setName(user.getName());
-            }
-            if(!userDataVerification.isEmptyString(user.getPassword())) {
-                usr.setPassword(user.getPassword());
+            if(userDataVerification.validateUpdate(user)) {
+                return userDataVerification.getMessage();
             }
             userRepository.save(usr);
             return "User updated successfully.";
         }
-
         return "User with CPF '" + cpf + "' does not exist.";
     }
 
