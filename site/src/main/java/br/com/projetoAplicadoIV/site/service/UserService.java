@@ -46,22 +46,13 @@ public class UserService {
 
             if(userDataVerification.isEmptyString(user.getEmail())) {
                 usr.setEmail(usr.getEmail());
-            } else {
-                usr.setEmail(user.getEmail());
             }
-
             if(userDataVerification.isEmptyString(user.getName())) {
                 usr.setName(usr.getName());
-            } else {
-                usr.setName(user.getName());
             }
-
             if(userDataVerification.isEmptyString(user.getPassword())) {
                 usr.setPassword(usr.getPassword());
-            } else {
-                usr.setPassword(user.getPassword());
             }
-
             userRepository.save(usr);
             return "User updated successfully.";
         }
