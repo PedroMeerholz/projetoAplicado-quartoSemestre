@@ -10,19 +10,12 @@ public class UserDataVerification {
     private String message = "";
     public boolean checkEmptyFields(NewUserDTO newUser) {
         //True is returned if there is a problem.
-        if(verifyCpf(newUser.getCpf()) || verifyEmail(newUser.getEmail()) || verifyName(newUser.getName()) || verifyPassword(newUser.getPassword())) {
-            System.out.println("Deez");
-            return true;
-        }
-        return false;
+        return verifyCpf(newUser.getCpf()) || verifyEmail(newUser.getEmail()) || verifyName(newUser.getName()) || verifyPassword(newUser.getPassword());
     }
 
     public boolean validateUpdate(UpdateUserDTO user) {
         //True is returned if there is a problem.
-        if(verifyEmail(user.getEmail()) || verifyName(user.getName()) || verifyPassword(user.getPassword())) {
-            return true;
-        }
-        return false;
+        return verifyEmail(user.getEmail()) || verifyName(user.getName()) || verifyPassword(user.getPassword());
     }
 
     private boolean verifyCpf(String cpf) {
@@ -32,6 +25,19 @@ public class UserDataVerification {
             return true;
         }
         return false;
+    }
+
+    private boolean verifyCpfLength(String cpf) {
+        if(cpf.length() != 11) {
+            addToMessage("CPF has to have 11 characters with no spaces.");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean verifyCpfValid(String cpf) {
+
+        return true;
     }
 
     private boolean verifyEmail(String email) {
