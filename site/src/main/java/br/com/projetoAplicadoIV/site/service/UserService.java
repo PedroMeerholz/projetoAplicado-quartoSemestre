@@ -44,14 +44,14 @@ public class UserService {
         if(existingUser.isPresent()) {
             User usr = existingUser.get();
 
-            if(userDataVerification.isEmptyString(user.getEmail())) {
-                usr.setEmail(usr.getEmail());
+            if(!userDataVerification.isEmptyString(user.getEmail())) {
+                usr.setEmail(user.getEmail());
             }
-            if(userDataVerification.isEmptyString(user.getName())) {
-                usr.setName(usr.getName());
+            if(!userDataVerification.isEmptyString(user.getName())) {
+                usr.setName(user.getName());
             }
-            if(userDataVerification.isEmptyString(user.getPassword())) {
-                usr.setPassword(usr.getPassword());
+            if(!userDataVerification.isEmptyString(user.getPassword())) {
+                usr.setPassword(user.getPassword());
             }
             userRepository.save(usr);
             return "User updated successfully.";
