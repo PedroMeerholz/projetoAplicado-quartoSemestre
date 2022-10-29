@@ -23,7 +23,7 @@ public class UserService {
         if(userDataVerification.checkEmptyFields(newUser)) {
             return userDataVerification.getMessage();
         } else {
-            if(checkForUser(newUser.getCpf()).isPresent()) {
+            if(checkForUserByCPF(newUser.getCpf()).isPresent() || checkForUserByEmail(newUser.getEmail()).isPresent()) {
                 return "User already exists.";
             }
 
@@ -39,7 +39,7 @@ public class UserService {
     }
 
     public String updateUser(UpdateUserDTO user, String cpf) {
-        Optional<User> existingUser = checkForUser(cpf);
+        Optional<User> existingUser = checkForUserByCPF(cpf);
 
         if(existingUser.isPresent()) {
             User usr = existingUser.get();
@@ -54,7 +54,7 @@ public class UserService {
     }
 
     public String deleteUser(String cpf) {
-        Optional<User> user = checkForUser(cpf);
+        Optional<User> user = checkForUserByCPF(cpf);
 
         if(user.isPresent()) {
             userRepository.delete(user.get());
@@ -64,8 +64,11 @@ public class UserService {
         return "User with CPF " + cpf + " does not exist.";
     }
 
-    public Optional<User> checkForUser(String cpf) {
-        Optional<User> user = userRepository.findByCPF(cpf);
-        return user;
+    public Optional<User> checkForUserByCPF(String cpf) {
+        return userRepository.findByCPF(cpf);
+    }
+
+    public Optional<User> checkForUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
