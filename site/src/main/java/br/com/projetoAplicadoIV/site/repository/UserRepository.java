@@ -13,4 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "from User where cpf = :cpf")
     Optional<User> findByCPF(@Param("cpf") String cpf);
+
+    @Query(value = "from User where email = :email")
+    Optional<User> findByEmail(@Param("email") String email);
 }
