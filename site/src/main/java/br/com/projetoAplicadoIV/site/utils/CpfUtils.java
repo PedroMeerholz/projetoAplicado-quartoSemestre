@@ -1,6 +1,7 @@
 package br.com.projetoAplicadoIV.site.utils;
 
 public class CpfUtils {
+    private String message = "";
     public boolean verifyCpfLength(String cpf) {
         if(cpf.length() != 11) return true;
         return false;
@@ -39,5 +40,19 @@ public class CpfUtils {
 
     public boolean validateSecondDigit() {
         return true;
+    }
+
+    public void addToMessage(String message) {
+        this.message += message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        String msg = message;
+        setMessage("");
+        return msg;
     }
 }
