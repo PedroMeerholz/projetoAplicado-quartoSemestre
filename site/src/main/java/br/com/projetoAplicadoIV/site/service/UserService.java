@@ -20,13 +20,13 @@ public class UserService {
     }
 
     public String saveUser(NewUserDTO newUser) {
-        if(userDataVerification.checkEmptyFields(newUser)) {
+        if(userDataVerification.areFieldsEmpty(newUser)) {
             return userDataVerification.getMessage();
-        } else {
+        }
+        if(userDataVerification.checkValidInfo(newUser)) {
             if(checkForUserByCPF(newUser.getCpf()).isPresent() || checkForUserByEmail(newUser.getEmail()).isPresent()) {
                 return "User already exists.";
             }
-
             User user = new User();
             user.setCpf(newUser.getCpf());
             user.setEmail(newUser.getEmail());
@@ -34,26 +34,33 @@ public class UserService {
             user.setPassword(newUser.getPassword());
 
             userRepository.save(user);
+
+            return "Successfully created user.";
         }
-        return "Success";
+        return userDataVerification.getMessage();
     }
 
     public String updateUser(UpdateUserDTO updatedUser, String cpf) {
+        if(userDataVerification.areFieldsEmpty(updatedUser)) {
+            return userDataVerification.getMessage();
+        }
+
         Optional<User> existingUser = checkForUserByCPF(cpf);
 
         if(existingUser.isPresent()) {
-            User user = existingUser.get();
-
-            if(userDataVerification.validateUpdate(updatedUser)) {
+            if(userDataVerification.areFieldsEmpty(updatedUser)) {
                 return userDataVerification.getMessage();
             }
+            if(userDataVerification.checkValidInfo(updatedUser)) {
+                User user = existingUser.get();
+                user.setEmail(updatedUser.getEmail().trim());
+                user.setName(updatedUser.getName().trim());
+                user.setPassword(updatedUser.getPassword());
 
-            user.setEmail(updatedUser.getEmail().trim());
-            user.setName(updatedUser.getName().trim());
-            user.setPassword(updatedUser.getPassword());
-
-            userRepository.save(user);
-            return "User updated successfully.";
+                userRepository.save(user);
+                return "User updated successfully.";
+            }
+            return userDataVerification.getMessage();
         }
         return "User with CPF '" + cpf + "' does not exist.";
     }
@@ -65,7 +72,6 @@ public class UserService {
             userRepository.delete(user.get());
             return "User deleted successfully.";
         }
-
         return "User with CPF " + cpf + " does not exist.";
     }
 
