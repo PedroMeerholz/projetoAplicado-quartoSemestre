@@ -2,23 +2,34 @@ package br.com.projetoAplicadoIV.site.service;
 
 import br.com.projetoAplicadoIV.site.entity.dto.NewUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.UpdateUserDTO;
+import br.com.projetoAplicadoIV.site.utils.CpfUtils;
 import org.hibernate.sql.Update;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserDataVerification {
     private String message = "";
-    public boolean checkEmptyFields(NewUserDTO newUser) {
+    private final CpfUtils cpfUtils = new CpfUtils();
+
+    public boolean areFieldsEmpty(NewUserDTO newUser) {
         //True is returned if there is a problem.
-        return verifyCpf(newUser.getCpf()) || verifyEmail(newUser.getEmail()) || verifyName(newUser.getName()) || verifyPassword(newUser.getPassword());
+        return isCpfEmpty(newUser.getCpf()) || isEmailEmpty(newUser.getEmail()) || isNameEmpty(newUser.getName()) || isPasswordEmpty(newUser.getPassword());
     }
 
-    public boolean validateUpdate(UpdateUserDTO user) {
+    public boolean areFieldsEmpty(UpdateUserDTO user) {
         //True is returned if there is a problem.
-        return verifyEmail(user.getEmail()) || verifyName(user.getName()) || verifyPassword(user.getPassword());
+        return isEmailEmpty(user.getEmail()) || isNameEmpty(user.getName()) || isPasswordEmpty(user.getPassword());
     }
 
-    private boolean verifyCpf(String cpf) {
+    public boolean checkValidInfo(NewUserDTO newUser) {
+        return isCpfLengthValid(newUser.getCpf()) && isCpfValid(newUser.getCpf()) && isPasswordLengthValid(newUser.getPassword());
+    }
+
+    public boolean checkValidInfo(UpdateUserDTO newUser) {
+        return isPasswordLengthValid(newUser.getPassword());
+    }
+
+    private boolean isCpfEmpty(String cpf) {
         //True is returned if there is a problem.
         if(isEmptyString(cpf)) {
             addToMessage("Field CPF can't be null.\n");
@@ -27,20 +38,21 @@ public class UserDataVerification {
         return false;
     }
 
-    private boolean verifyCpfLength(String cpf) {
-        if(cpf.length() != 11) {
-            addToMessage("CPF has to have 11 characters with no spaces.");
-            return true;
-        }
+    private boolean isCpfLengthValid(String cpf) {
+        //Returns true if valid.
+        if(cpfUtils.verifyCpfLength(cpf)) return true;
+        addToMessage("CPF has to have 11 characters with no spaces.");
         return false;
     }
 
-    private boolean verifyCpfValid(String cpf) {
-
-        return true;
+    private boolean isCpfValid(String cpf) {
+        //Returns true if valid.
+        if(cpfUtils.validateCpf(cpf)) return true;
+        addToMessage("Cpf is invalid.");
+        return false;
     }
 
-    private boolean verifyEmail(String email) {
+    private boolean isEmailEmpty(String email) {
         //True is returned if there is a problem.
         if(isEmptyString(email)) {
             addToMessage("Field EMAIL can't be null.\n");
@@ -49,7 +61,7 @@ public class UserDataVerification {
         return false;
     }
 
-    private boolean verifyName(String name) {
+    private boolean isNameEmpty(String name) {
         //True is returned if there is a problem.
         if(isEmptyString(name)) {
             addToMessage("Field NAME can't be null.\n");
@@ -58,12 +70,21 @@ public class UserDataVerification {
         return false;
     }
 
-    private boolean verifyPassword(String password) {
+    private boolean isPasswordEmpty(String password) {
         //True is returned if there is a problem.
         if(isEmptyString(password)) {
             addToMessage("Field PASSWORD can't be null.\n");
             return true;
         }
+        return false;
+    }
+
+    private boolean isPasswordLengthValid(String password) {
+        //True is returned if it is valid.
+        if(password.length() >= 8) {
+            return true;
+        }
+        addToMessage("Password has to have 8 or more characters.");
         return false;
     }
 
