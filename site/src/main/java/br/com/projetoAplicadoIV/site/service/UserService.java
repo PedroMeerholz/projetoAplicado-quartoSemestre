@@ -38,16 +38,21 @@ public class UserService {
         return "Success";
     }
 
-    public String updateUser(UpdateUserDTO user, String cpf) {
+    public String updateUser(UpdateUserDTO updatedUser, String cpf) {
         Optional<User> existingUser = checkForUserByCPF(cpf);
 
         if(existingUser.isPresent()) {
-            User usr = existingUser.get();
+            User user = existingUser.get();
 
-            if(userDataVerification.validateUpdate(user)) {
+            if(userDataVerification.validateUpdate(updatedUser)) {
                 return userDataVerification.getMessage();
             }
-            userRepository.save(usr);
+
+            user.setEmail(updatedUser.getEmail().trim());
+            user.setName(updatedUser.getName().trim());
+            user.setPassword(updatedUser.getPassword());
+
+            userRepository.save(user);
             return "User updated successfully.";
         }
         return "User with CPF '" + cpf + "' does not exist.";
