@@ -3,15 +3,12 @@ package br.com.projetoAplicadoIV.site.controller;
 import br.com.projetoAplicadoIV.site.entity.dto.NewUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.UpdateUserDTO;
 import br.com.projetoAplicadoIV.site.service.UserService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
     private final UserService userService;
-
     public UserController(UserService userService) {
         this.userService = userService;
     }

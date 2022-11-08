@@ -3,7 +3,7 @@ package br.com.projetoAplicadoIV.site.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="usuario")
+@Table(name="login")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

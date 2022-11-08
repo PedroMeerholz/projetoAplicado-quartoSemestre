@@ -10,10 +10,8 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
     private final UserDataVerification userDataVerification;
-
     public UserService(UserRepository userRepository, UserDataVerification userDataVerification) {
         this.userRepository = userRepository;
         this.userDataVerification = userDataVerification;
