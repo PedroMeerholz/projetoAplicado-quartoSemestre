@@ -1,6 +1,7 @@
 package br.com.projetoAplicadoIV.site.service;
 
 import br.com.projetoAplicadoIV.site.entity.User;
+import br.com.projetoAplicadoIV.site.entity.dto.GetUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.NewUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.UpdateUserDTO;
 import br.com.projetoAplicadoIV.site.repository.UserRepository;
@@ -61,6 +62,21 @@ public class UserService {
             return userDataVerification.getMessage();
         }
         return "User with CPF '" + cpf + "' does not exist.";
+    }
+
+    public GetUserDTO getUser(String cpf) {
+        Optional<User> user = checkForUserByCPF(cpf);
+
+        if(user.isPresent()) {
+            User presentUser = user.get();
+            GetUserDTO getUserDTO = new GetUserDTO();
+            getUserDTO.setName(presentUser.getName());
+            getUserDTO.setCpf(presentUser.getCpf());
+            getUserDTO.setEmail(presentUser.getEmail());
+            return getUserDTO;
+        } else {
+            return new GetUserDTO();
+        }
     }
 
     public String deleteUser(String cpf) {

@@ -1,5 +1,6 @@
 package br.com.projetoAplicadoIV.site.controller;
 
+import br.com.projetoAplicadoIV.site.entity.dto.GetUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.NewUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.UpdateUserDTO;
 import br.com.projetoAplicadoIV.site.service.UserService;
@@ -21,6 +22,11 @@ public class UserController {
     @PutMapping("/update/{cpf}")
     public String updateUser(@RequestBody UpdateUserDTO prevUser, @PathVariable("cpf") String cpf) {
         return userService.updateUser(prevUser, cpf);
+    }
+
+    @GetMapping("/get/{cpf}")
+    public GetUserDTO getUser(@PathVariable("cpf") String cpf) {
+        return userService.getUser(cpf);
     }
 
     @DeleteMapping("/delete/{cpf}")
