@@ -5,6 +5,7 @@ import br.com.projetoAplicadoIV.site.entity.dto.GetUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.NewUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.UpdateUserDTO;
 import br.com.projetoAplicadoIV.site.repository.UserRepository;
+import br.com.projetoAplicadoIV.site.utils.IdGenerator;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,9 +14,11 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final UserDataVerification userDataVerification;
-    public UserService(UserRepository userRepository, UserDataVerification userDataVerification) {
+    private final IdGenerator idGenerator;
+    public UserService(UserRepository userRepository, UserDataVerification userDataVerification, IdGenerator idGenerator) {
         this.userRepository = userRepository;
         this.userDataVerification = userDataVerification;
+        this.idGenerator = idGenerator;
     }
 
     public String saveUser(NewUserDTO newUser) {
@@ -27,10 +30,10 @@ public class UserService {
                 return "User already exists.";
             }
             User user = new User();
+            user.setId(idGenerator.getNewId());
             user.setCpf(newUser.getCpf());
             user.setEmail(newUser.getEmail());
             user.setName(newUser.getName());
-            user.setPassword(newUser.getPassword());
 
             userRepository.save(user);
 
@@ -50,16 +53,12 @@ public class UserService {
             if(userDataVerification.areFieldsEmpty(updatedUser)) {
                 return userDataVerification.getMessage();
             }
-            if(userDataVerification.checkValidInfo(updatedUser)) {
-                User user = existingUser.get();
-                user.setEmail(updatedUser.getEmail().trim());
-                user.setName(updatedUser.getName().trim());
-                user.setPassword(updatedUser.getPassword());
+            User user = existingUser.get();
+            user.setEmail(updatedUser.getEmail().trim());
+            user.setName(updatedUser.getName().trim());
 
-                userRepository.save(user);
-                return "User updated successfully.";
-            }
-            return userDataVerification.getMessage();
+            userRepository.save(user);
+            return "User updated successfully.";
         }
         return "User with CPF '" + cpf + "' does not exist.";
     }

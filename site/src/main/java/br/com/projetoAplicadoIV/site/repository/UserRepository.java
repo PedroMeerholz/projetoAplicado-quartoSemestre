@@ -16,4 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "from User where email = :email")
     Optional<User> findByEmail(@Param("email") String email);
+
+    @Query(value= "select id from login order by id desc limit 1", nativeQuery = true)
+    Optional<Long> getLastId();
 }
