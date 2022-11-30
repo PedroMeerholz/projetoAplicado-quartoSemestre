@@ -30,7 +30,7 @@ public class UserDataVerification {
     }
 
     private boolean isCpfEmpty(String cpf) {
-        //True is returned if there is a problem.
+        //True is returned if empty.
         if(isEmptyString(cpf)) {
             addToMessage("Field CPF can't be null.\n");
             return true;
@@ -41,14 +41,23 @@ public class UserDataVerification {
     private boolean isCpfLengthValid(String cpf) {
         //Returns true if valid.
         if(cpfUtils.verifyCpfLength(cpf)) return true;
-        addToMessage("CPF has to have 11 characters with no spaces.");
+        addToMessage("CPF has to have 11 numbers with no spaces.");
+        return false;
+    }
+
+    private boolean isCpfNumbersOnly(String cpf) {
+        //Returns true if valid.
+        if(!cpf.matches("[0-9]+")) {
+            return true;
+        };
+        addToMessage("CPF CANNOT contain letters.");
         return false;
     }
 
     private boolean isCpfValid(String cpf) {
         //Returns true if valid.
         if(cpfUtils.validateCpf(cpf)) return true;
-        addToMessage("Cpf is invalid.");
+        addToMessage("Cpf '" + cpf + "' is invalid.");
         return false;
     }
 
@@ -67,6 +76,15 @@ public class UserDataVerification {
             addToMessage("Field NAME can't be null.\n");
             return true;
         }
+        return false;
+    }
+
+    private boolean isNameValid(String name) {
+        if(name.matches("[a-zA-Z ]+")) {
+            name = name.trim();
+            name = name.replaceAll("\\s+", " ");
+        }
+        addToMessage("Name has invalid characters. Use only LETTERS.\n");
         return false;
     }
 
