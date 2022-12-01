@@ -13,7 +13,7 @@ public class UserDataVerification {
 
     public boolean areFieldsEmpty(NewUserDTO newUser) {
         //True is returned if there is a problem.
-        return isCpfEmpty(newUser.getCpf()) || isEmailEmpty(newUser.getEmail()) || isNameEmpty(newUser.getName());
+        return isCpfEmpty(newUser.getCpf()) || isEmailEmpty(newUser.getEmail()) || isNameEmpty(newUser.getName()) || isPasswordEmpty(newUser.getPassword());
     }
 
     public boolean areFieldsEmpty(UpdateUserDTO user) {
@@ -22,7 +22,7 @@ public class UserDataVerification {
     }
 
     public boolean checkValidInfo(NewUserDTO newUser) {
-        return isCpfLengthValid(newUser.getCpf()) && isCpfValid(newUser.getCpf());
+        return isCpfLengthValid(newUser.getCpf()) && isCpfValid(newUser.getCpf()) && isPasswordLengthValid(newUser.getPassword());
     }
 
     private boolean isCpfEmpty(String cpf) {
@@ -81,6 +81,24 @@ public class UserDataVerification {
             name = name.replaceAll("\\s+", " ");
         }
         addToMessage("Name has invalid characters. Use only LETTERS.\n");
+        return false;
+    }
+
+    private boolean isPasswordEmpty(String password) {
+        //True is returned if there is a problem.
+        if(isEmptyString(password)) {
+            addToMessage("Field PASSWORD can't be null.\n");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isPasswordLengthValid(String password) {
+        //True is returned if it is valid.
+        if(password.length() >= 8) {
+            return true;
+        }
+        addToMessage("Password has to have 8 or more characters.");
         return false;
     }
 

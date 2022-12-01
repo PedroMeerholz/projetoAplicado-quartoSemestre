@@ -15,11 +15,9 @@ public class IdGenerator {
     private void getLastDatabaseId() {
         if(repository.getLastId().isPresent()) {
             this.id = repository.getLastId().get();
-            System.out.println(this.id);
         } else {
             this.id = new Long(1);
         }
-        System.out.println(this.id);
     }
 
     private void increaseId() {

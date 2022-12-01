@@ -4,6 +4,7 @@ import br.com.projetoAplicadoIV.site.entity.dto.GetUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.NewUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.UpdateUserDTO;
 import br.com.projetoAplicadoIV.site.service.UserService;
+import br.com.projetoAplicadoIV.site.utils.TokenGenerator;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,8 @@ public class UserController {
 
     @PostMapping("/create")
     public String createUser(@RequestBody NewUserDTO newUser) {
+        String token = TokenGenerator.generateToken();
+        System.out.println(token);
         return userService.saveUser(newUser);
     }
 

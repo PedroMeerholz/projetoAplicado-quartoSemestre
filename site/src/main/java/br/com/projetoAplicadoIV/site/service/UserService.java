@@ -6,6 +6,7 @@ import br.com.projetoAplicadoIV.site.entity.dto.NewUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.UpdateUserDTO;
 import br.com.projetoAplicadoIV.site.repository.UserRepository;
 import br.com.projetoAplicadoIV.site.utils.IdGenerator;
+import br.com.projetoAplicadoIV.site.utils.TokenGenerator;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -34,6 +35,8 @@ public class UserService {
             user.setCpf(newUser.getCpf());
             user.setEmail(newUser.getEmail());
             user.setName(newUser.getName());
+            user.setPassword(newUser.getPassword());
+            user.setToken(TokenGenerator.generateToken());
 
             userRepository.save(user);
 
