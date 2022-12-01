@@ -22,10 +22,11 @@ public class TokenService {
 
     public boolean verifyToken(String cpf, String paramToken) {
         String token = getToken(cpf);
-        if(token.equals(paramToken)) {
-            return true;
-        } else {
-            return false;
+        if(token != null) {
+            if(token.equals(paramToken)) {
+                return true;
+            }
         }
+        return false;
     }
 }
