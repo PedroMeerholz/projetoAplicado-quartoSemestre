@@ -1,4 +1,4 @@
-package br.com.projetoAplicadoIV.site.utils;
+package br.com.projetoAplicadoIV.site.utils.generator;
 
 import java.util.Random;
 

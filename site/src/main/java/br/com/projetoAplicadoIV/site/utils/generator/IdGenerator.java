@@ -1,4 +1,4 @@
-package br.com.projetoAplicadoIV.site.utils;
+package br.com.projetoAplicadoIV.site.utils.generator;
 
 import br.com.projetoAplicadoIV.site.repository.UserRepository;
 import org.springframework.stereotype.Component;

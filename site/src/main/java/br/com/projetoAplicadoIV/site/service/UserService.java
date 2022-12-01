@@ -5,8 +5,8 @@ import br.com.projetoAplicadoIV.site.entity.dto.GetUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.NewUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.UpdateUserDTO;
 import br.com.projetoAplicadoIV.site.repository.UserRepository;
-import br.com.projetoAplicadoIV.site.utils.IdGenerator;
-import br.com.projetoAplicadoIV.site.utils.TokenGenerator;
+import br.com.projetoAplicadoIV.site.utils.generator.IdGenerator;
+import br.com.projetoAplicadoIV.site.utils.generator.TokenGenerator;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

@@ -4,7 +4,7 @@ import br.com.projetoAplicadoIV.site.entity.dto.GetUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.NewUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.UpdateUserDTO;
 import br.com.projetoAplicadoIV.site.service.UserService;
-import br.com.projetoAplicadoIV.site.utils.TokenGenerator;
+import br.com.projetoAplicadoIV.site.utils.generator.TokenGenerator;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
