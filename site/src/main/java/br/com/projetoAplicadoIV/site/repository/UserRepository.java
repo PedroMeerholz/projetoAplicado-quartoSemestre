@@ -1,6 +1,7 @@
 package br.com.projetoAplicadoIV.site.repository;
 
 import br.com.projetoAplicadoIV.site.entity.User;
+import br.com.projetoAplicadoIV.site.entity.dto.GetTokenDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value= "select id from login order by id desc limit 1", nativeQuery = true)
     Optional<Long> getLastId();
+
+    @Query(value="select token from User where cpf = :cpf")
+    Optional<String> getToken(String cpf);
 }

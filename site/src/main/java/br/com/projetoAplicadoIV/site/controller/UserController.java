@@ -5,6 +5,7 @@ import br.com.projetoAplicadoIV.site.entity.dto.NewUserDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.UpdateUserDTO;
 import br.com.projetoAplicadoIV.site.service.UserService;
 import br.com.projetoAplicadoIV.site.utils.generator.TokenGenerator;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,9 +29,14 @@ public class UserController {
     }
 
     @GetMapping("/get/{cpf}")
-    public GetUserDTO getUser(@PathVariable("cpf") String cpf) {
-        return userService.getUser(cpf);
+    public GetUserDTO getUser(@PathVariable("cpf") String cpf, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        return userService.getUser(cpf, token);
     }
+
+//    @GetMapping("/get/test/{cpf}")
+//    public GetUserDTO getUserTest(@PathVariable("cpf") String cpf, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+//        return userService.getUserTest(cpf, token);
+//    }
 
     @DeleteMapping("/delete/{cpf}")
     public String deleteUser(@PathVariable("cpf") String cpf) {

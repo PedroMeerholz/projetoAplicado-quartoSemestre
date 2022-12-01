@@ -15,10 +15,12 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final UserDataVerification userDataVerification;
+    private final TokenService tokenService;
     private final IdGenerator idGenerator;
-    public UserService(UserRepository userRepository, UserDataVerification userDataVerification, IdGenerator idGenerator) {
+    public UserService(UserRepository userRepository, UserDataVerification userDataVerification, TokenService tokenService, IdGenerator idGenerator) {
         this.userRepository = userRepository;
         this.userDataVerification = userDataVerification;
+        this.tokenService = tokenService;
         this.idGenerator = idGenerator;
     }
 
@@ -66,19 +68,20 @@ public class UserService {
         return "User with CPF '" + cpf + "' does not exist.";
     }
 
-    public GetUserDTO getUser(String cpf) {
+    public GetUserDTO getUser(String cpf, String token) {
         Optional<User> user = checkForUserByCPF(cpf);
 
-        if(user.isPresent()) {
-            User presentUser = user.get();
-            GetUserDTO getUserDTO = new GetUserDTO();
-            getUserDTO.setName(presentUser.getName());
-            getUserDTO.setCpf(presentUser.getCpf());
-            getUserDTO.setEmail(presentUser.getEmail());
-            return getUserDTO;
-        } else {
-            return new GetUserDTO();
+        if(tokenService.verifyToken(cpf, token)) {
+            if(user.isPresent()) {
+                User presentUser = user.get();
+                GetUserDTO getUserDTO = new GetUserDTO();
+                getUserDTO.setName(presentUser.getName());
+                getUserDTO.setCpf(presentUser.getCpf());
+                getUserDTO.setEmail(presentUser.getEmail());
+                return getUserDTO;
+            }
         }
+        return new GetUserDTO();
     }
 
     public String deleteUser(String cpf) {
