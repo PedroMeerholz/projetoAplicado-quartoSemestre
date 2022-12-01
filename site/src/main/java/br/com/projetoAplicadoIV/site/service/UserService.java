@@ -51,23 +51,27 @@ public class UserService {
         return userDataVerification.getMessage();
     }
 
-    public String updateUser(UpdateUserDTO updatedUser, String cpf) {
-        if(userDataVerification.areFieldsEmpty(updatedUser)) {
-            return userDataVerification.getMessage();
-        }
-
-        Optional<User> existingUser = checkForUserByCPF(cpf);
-
-        if(existingUser.isPresent()) {
+    public String updateUser(UpdateUserDTO updatedUser, String cpf, String token) {
+        if(tokenService.verifyToken(cpf, token)) {
             if(userDataVerification.areFieldsEmpty(updatedUser)) {
                 return userDataVerification.getMessage();
             }
-            User user = existingUser.get();
-            user.setEmail(updatedUser.getEmail().trim());
-            user.setName(updatedUser.getName().trim());
 
-            userRepository.save(user);
-            return "User updated successfully.";
+            Optional<User> existingUser = checkForUserByCPF(cpf);
+
+            if(existingUser.isPresent()) {
+                if(userDataVerification.areFieldsEmpty(updatedUser)) {
+                    return userDataVerification.getMessage();
+                }
+                User user = existingUser.get();
+                user.setEmail(updatedUser.getEmail().trim());
+                user.setName(updatedUser.getName().trim());
+
+                userRepository.save(user);
+                return "User updated successfully.";
+            }
+        } else {
+            return "Your autentication token in wrong. Please verify.";
         }
         return "User with CPF '" + cpf + "' does not exist.";
     }

@@ -22,8 +22,8 @@ public class UserController {
     }
 
     @PutMapping("/update/{cpf}")
-    public String updateUser(@RequestBody UpdateUserDTO prevUser, @PathVariable("cpf") String cpf) {
-        return userService.updateUser(prevUser, cpf);
+    public String updateUser(@RequestBody UpdateUserDTO prevUser, @PathVariable("cpf") String cpf, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        return userService.updateUser(prevUser, cpf, token);
     }
 
     @GetMapping("/get/{cpf}")
