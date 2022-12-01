@@ -92,13 +92,18 @@ public class UserService {
         return new GetUserDTO();
     }
 
-    public String deleteUser(String cpf) {
-        Optional<User> user = checkForUserByCPF(cpf);
+    public String deleteUser(String cpf, String token) {
+        if(tokenService.verifyToken(cpf, token)) {
+            Optional<User> user = checkForUserByCPF(cpf);
 
-        if(user.isPresent()) {
-            userRepository.delete(user.get());
-            return "User deleted successfully.";
+            if(user.isPresent()) {
+                userRepository.delete(user.get());
+                return "User deleted successfully.";
+            }
+        } else {
+            return "Your authentication token is wrong. Please verify.";
         }
+
         return "User with CPF " + cpf + " does not exist.";
     }
 

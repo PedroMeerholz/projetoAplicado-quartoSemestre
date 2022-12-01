@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{cpf}")
-    public String deleteUser(@PathVariable("cpf") String cpf) {
-        return userService.deleteUser(cpf);
+    public String deleteUser(@PathVariable("cpf") String cpf, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        return userService.deleteUser(cpf, token);
     }
 }
