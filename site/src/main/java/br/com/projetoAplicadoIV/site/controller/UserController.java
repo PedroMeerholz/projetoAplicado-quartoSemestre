@@ -16,11 +16,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/create")
-    public String createUser(@RequestBody NewUserDTO newUser) {
-        String token = TokenGenerator.generateToken();
-        System.out.println(token);
-        return userService.saveUser(newUser);
+    @PostMapping("/create/{cpf}")
+    public String createUser(@RequestBody NewUserDTO newUser, @PathVariable("cpf") String cpf, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        return userService.saveUser(newUser, token, cpf);
     }
 
     @PutMapping("/update/{cpf}")
@@ -32,11 +30,6 @@ public class UserController {
     public GetUserDTO getUser(@PathVariable("cpf") String cpf, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         return userService.getUser(cpf, token);
     }
-
-//    @GetMapping("/get/test/{cpf}")
-//    public GetUserDTO getUserTest(@PathVariable("cpf") String cpf, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-//        return userService.getUserTest(cpf, token);
-//    }
 
     @DeleteMapping("/delete/{cpf}")
     public String deleteUser(@PathVariable("cpf") String cpf) {

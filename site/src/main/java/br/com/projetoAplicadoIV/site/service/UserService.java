@@ -24,25 +24,29 @@ public class UserService {
         this.idGenerator = idGenerator;
     }
 
-    public String saveUser(NewUserDTO newUser) {
-        if(userDataVerification.areFieldsEmpty(newUser)) {
-            return userDataVerification.getMessage();
-        }
-        if(userDataVerification.checkValidInfo(newUser)) {
-            if(checkForUserByCPF(newUser.getCpf()).isPresent() || checkForUserByEmail(newUser.getEmail()).isPresent()) {
-                return "User already exists.";
+    public String saveUser(NewUserDTO newUser, String token, String cpf) {
+        if(tokenService.verifyToken(cpf, token)) {
+            if(userDataVerification.areFieldsEmpty(newUser)) {
+                return userDataVerification.getMessage();
             }
-            User user = new User();
-            user.setId(idGenerator.getNewId());
-            user.setCpf(newUser.getCpf());
-            user.setEmail(newUser.getEmail());
-            user.setName(newUser.getName());
-            user.setPassword(newUser.getPassword());
-            user.setToken(TokenGenerator.generateToken());
+            if(userDataVerification.checkValidInfo(newUser)) {
+                if(checkForUserByCPF(newUser.getCpf()).isPresent() || checkForUserByEmail(newUser.getEmail()).isPresent()) {
+                    return "User already exists.";
+                }
+                User user = new User();
+                user.setId(idGenerator.getNewId());
+                user.setCpf(newUser.getCpf());
+                user.setEmail(newUser.getEmail());
+                user.setName(newUser.getName());
+                user.setPassword(newUser.getPassword());
+                user.setToken(TokenGenerator.generateToken());
 
-            userRepository.save(user);
+                userRepository.save(user);
 
-            return "Successfully created user.";
+                return "Successfully created user.";
+            }
+        } else {
+            return "Your authentication token is wrong. Please verify.";
         }
         return userDataVerification.getMessage();
     }
