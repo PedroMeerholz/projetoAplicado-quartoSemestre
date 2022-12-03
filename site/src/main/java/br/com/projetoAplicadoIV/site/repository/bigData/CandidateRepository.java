@@ -28,6 +28,6 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long> {
     @Query(value="select c.ageGroup, count(c.ageGroup) from Candidate c group by c.ageGroup order by c.ageGroup")
     Optional<List<String>> groupByAgeGroup();
 
-    @Query(value="select c.maritalStatus, count(c.maritalStatus) from Candidate c group by c.maritalStatus")
+    @Query(value="select c.maritalStatus, count(c.maritalStatus) from Candidate c group by c.maritalStatus order by c.maritalStatus")
     Optional<List<String>> groupByMaritalStatus();
 }

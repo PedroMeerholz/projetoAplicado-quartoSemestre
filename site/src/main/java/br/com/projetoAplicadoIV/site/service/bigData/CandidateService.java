@@ -155,4 +155,27 @@ public class CandidateService {
         }
         return ageGroupDTOS;
     }
+
+    public List<MaritalStatusDTO> candidateMaritalStatus(String token, String cpf) {
+        if(tokenService.verifyToken(cpf, token)) {
+            if(candidateRepository.groupByMaritalStatus().isPresent()) {
+                List<String> maritalStatus = candidateRepository.groupByMaritalStatus().get();
+                return stringMaritalStatusToDTO(maritalStatus);
+            }
+        }
+        return new ArrayList<MaritalStatusDTO>();
+    }
+
+    private List<MaritalStatusDTO> stringMaritalStatusToDTO(List<String> maritalStatus) {
+        List<MaritalStatusDTO> maritalStatusDTOS = new ArrayList<MaritalStatusDTO>();
+        for(int i=0; i<maritalStatus.size(); i++) {
+            MaritalStatusDTO maritalStatusDTO = new MaritalStatusDTO();
+            String maritalStatusString = maritalStatus.get(i);
+            String[] maritalStatusAndQuantity = maritalStatusString.split(",");
+            maritalStatusDTO.setMaritalStatus(maritalStatusAndQuantity[0]);
+            maritalStatusDTO.setQuantity(Integer.valueOf(maritalStatusAndQuantity[1]));
+            maritalStatusDTOS.add(maritalStatusDTO);
+        }
+        return maritalStatusDTOS;
+    }
 }

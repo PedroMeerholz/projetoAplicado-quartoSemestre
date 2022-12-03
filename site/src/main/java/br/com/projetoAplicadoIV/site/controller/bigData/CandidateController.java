@@ -45,4 +45,9 @@ public class CandidateController {
     public List<AgeGroupDTO> getCandidateAgeGroup(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("cpf") String cpf) {
         return candidateService.candidateAgeGroup(token, cpf);
     }
+
+    @GetMapping("/maritalStatus/{cpf}")
+    public List<MaritalStatusDTO> getCandidateMaritalStatus(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("cpf") String cpf) {
+        return candidateService.candidateMaritalStatus(token, cpf);
+    }
 }
