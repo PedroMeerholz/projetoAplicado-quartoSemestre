@@ -40,4 +40,9 @@ public class CandidateController {
     public List<ScholarityDTO> getCandidateScholarity(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("cpf") String cpf) {
         return candidateService.candidateScholarity(token, cpf);
     }
+
+    @GetMapping("/age/{cpf}")
+    public List<AgeGroupDTO> getCandidateAgeGroup(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("cpf") String cpf) {
+        return candidateService.candidateAgeGroup(token, cpf);
+    }
 }

@@ -132,4 +132,27 @@ public class CandidateService {
         }
         return schoolingDTOS;
     }
+
+    public List<AgeGroupDTO> candidateAgeGroup(String token, String cpf) {
+        if(tokenService.verifyToken(cpf, token)) {
+            if(candidateRepository.groupByAgeGroup().isPresent()) {
+                List<String> ageGroups = candidateRepository.groupByAgeGroup().get();
+                return stringAgeGroupToDTO(ageGroups);
+            }
+        }
+        return new ArrayList<AgeGroupDTO>();
+    }
+
+    private List<AgeGroupDTO> stringAgeGroupToDTO(List<String> ageGroups) {
+        List<AgeGroupDTO> ageGroupDTOS = new ArrayList<AgeGroupDTO>();
+        for(int i=0;i< ageGroups.size();i++) {
+            AgeGroupDTO ageGroupDTO = new AgeGroupDTO();
+            String ageGroup = ageGroups.get(i);
+            String[] ageGroupAndQuantity = ageGroup.split(",");
+            ageGroupDTO.setAgeGroup(ageGroupAndQuantity[0]);
+            ageGroupDTO.setQuantity(Integer.valueOf(ageGroupAndQuantity[1]));
+            ageGroupDTOS.add(ageGroupDTO);
+        }
+        return ageGroupDTOS;
+    }
 }
