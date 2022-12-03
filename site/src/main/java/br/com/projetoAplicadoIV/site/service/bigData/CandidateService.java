@@ -1,5 +1,6 @@
 package br.com.projetoAplicadoIV.site.service.bigData;
 
+import br.com.projetoAplicadoIV.site.entity.dto.bigData.GenderDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.bigData.NationalityDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.bigData.PositionDTO;
 import br.com.projetoAplicadoIV.site.repository.bigData.CandidateRepository;
@@ -44,8 +45,8 @@ public class CandidateService {
 
     public List<NationalityDTO> candidateNationality(String token, String cpf) {
         if(tokenService.verifyToken(cpf, token)) {
-            if(candidateRepository.groupbyNationality().isPresent()) {
-                List<String> nationalities = candidateRepository.groupbyNationality().get();
+            if(candidateRepository.groupByNationality().isPresent()) {
+                List<String> nationalities = candidateRepository.groupByNationality().get();
                 return stringNationalityToDTO(nationalities);
             }
         }
@@ -63,5 +64,28 @@ public class CandidateService {
             nationalityDTOS.add(nationalityDTO);
         }
         return nationalityDTOS;
+    }
+
+    public List<GenderDTO> candidateGender(String token, String cpf) {
+        if(tokenService.verifyToken(cpf, token)) {
+            if(candidateRepository.groupByGender().isPresent()) {
+                List<String> genders = candidateRepository.groupByGender().get();
+                return stringGenderToDTO(genders);
+            }
+        }
+        return new ArrayList<GenderDTO>();
+    }
+
+    private List<GenderDTO> stringGenderToDTO(List<String> genders) {
+        List<GenderDTO> gendersDTOS = new ArrayList<GenderDTO>();
+        for(int i=0;i<genders.size();i++) {
+            GenderDTO genderDTO = new GenderDTO();
+            String gender = genders.get(i);
+            String[] genderAndQuantity = gender.split(",");
+            genderDTO.setGender(genderAndQuantity[0]);
+            genderDTO.setQuantity(Integer.valueOf(genderAndQuantity[1]));
+            gendersDTOS.add(genderDTO);
+        }
+        return gendersDTOS;
     }
 }

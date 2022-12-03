@@ -1,5 +1,6 @@
 package br.com.projetoAplicadoIV.site.controller.bigData;
 
+import br.com.projetoAplicadoIV.site.entity.dto.bigData.GenderDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.bigData.NationalityDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.bigData.PositionDTO;
 import br.com.projetoAplicadoIV.site.service.bigData.CandidateService;
@@ -25,5 +26,10 @@ public class CandidateController {
     @GetMapping("/nationality/{cpf}")
     public List<NationalityDTO> getCandidateNationality(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("cpf") String cpf) {
         return candidateService.candidateNationality(token, cpf);
+    }
+
+    @GetMapping("/gender/{cpf}")
+    public List<GenderDTO> getCandidateGender(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("cpf") String cpf) {
+        return candidateService.candidateGender(token, cpf);
     }
 }

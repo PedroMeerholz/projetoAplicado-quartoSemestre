@@ -16,9 +16,6 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long> {
     @Query(value="select c.nationality, count(c.nationality) from Candidate c group by c.nationality")
     Optional<List<String>> groupByNationality();
 
-    @Query(value="select c.job, count(c.job) from Candidate c group by c.job")
-    Optional<List<String>> groupByJob();
-
     @Query(value="select c.gender, count(c.gender) from Candidate c group by c.gender")
     Optional<List<String>> groupByGender();
 
