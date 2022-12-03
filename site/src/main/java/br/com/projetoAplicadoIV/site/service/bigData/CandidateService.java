@@ -23,13 +23,13 @@ public class CandidateService {
         if(tokenService.verifyToken(cpf, token)) {
             if(candidateRepository.groupByPosition().isPresent()) {
                 List<String> positions = candidateRepository.groupByPosition().get();
-                return stringToDTO(positions);
+                return stringPositionToDTO(positions);
             }
         }
         return new ArrayList<PositionDTO>();
     }
 
-    private List<PositionDTO> stringToDTO(List<String> positions) {
+    private List<PositionDTO> stringPositionToDTO(List<String> positions) {
         List<PositionDTO> positionDTOS = new ArrayList<PositionDTO>();
         for(int i=0; i< positions.size();i++) {
             PositionDTO positionDTO = new PositionDTO();
