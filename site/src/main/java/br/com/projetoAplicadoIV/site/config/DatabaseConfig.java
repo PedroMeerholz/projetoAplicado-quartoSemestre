@@ -1,4 +1,4 @@
-package br.com.projetoAplicadoIV.site.databaseConfig;
+package br.com.projetoAplicadoIV.site.config;
 
 import org.hibernate.dialect.PostgreSQL9Dialect;
 
