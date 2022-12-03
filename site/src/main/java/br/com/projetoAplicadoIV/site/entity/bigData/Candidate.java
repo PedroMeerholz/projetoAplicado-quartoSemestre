@@ -1,13 +1,13 @@
 package br.com.projetoAplicadoIV.site.entity.bigData;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="candidato")
 public class Candidate {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(name="nome")
     private String name;
     @Column(name="cargo_eleicao")
@@ -24,18 +24,18 @@ public class Candidate {
     private String candidateNumber;
     @Column(name="situacao_candidatura")
     private String candidatureSituation;
-    @Column(name="esolaridade")
+    @Column(name="escolaridade")
     private String scholarity;
     @Column(name="faixa_etaria")
     private String ageGroup;
     @Column(name="estado_civil")
     private String maritalStatus;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

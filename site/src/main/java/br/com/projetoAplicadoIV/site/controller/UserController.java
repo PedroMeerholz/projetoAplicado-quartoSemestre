@@ -36,9 +36,4 @@ public class UserController {
         return userService.deleteUser(cpf, token);
     }
 
-    @GetMapping("/candidate/position")
-    public String getCandidatePosition() {
-        return null;
-    }
-
 }
