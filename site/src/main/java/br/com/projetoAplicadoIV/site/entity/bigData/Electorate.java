@@ -16,7 +16,7 @@ public class Electorate {
     private String maritalStatus;
     @Column(name="faixa_etaria")
     private String ageGroup;
-    @Column(name="scholarity")
+    @Column(name="escolaridade")
     private String scholarity;
 
     public int getId() {
