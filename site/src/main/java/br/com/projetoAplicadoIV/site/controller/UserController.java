@@ -35,4 +35,10 @@ public class UserController {
     public String deleteUser(@PathVariable("cpf") String cpf, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         return userService.deleteUser(cpf, token);
     }
+
+    @GetMapping("/candidate/position")
+    public String getCandidatePosition() {
+        return null;
+    }
+
 }
