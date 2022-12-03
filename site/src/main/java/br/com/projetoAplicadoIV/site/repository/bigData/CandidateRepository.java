@@ -10,10 +10,10 @@ import java.util.Optional;
 
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {
-    @Query(value="select c.position, count(c.position) from Candidate c group by c.position")
+    @Query(value="select c.position, count(c.position) from Candidate c group by c.position order by c.position")
     Optional<List<String>> groupByPosition();
 
-    @Query(value="select c.nationality, count(c.nationality) from Candidate c group by c.nationality")
+    @Query(value="select c.nationality, count(c.nationality) from Candidate c group by c.nationality order by c.nationality")
     Optional<List<String>> groupByNationality();
 
     @Query(value="select c.gender, count(c.gender) from Candidate c group by c.gender")
