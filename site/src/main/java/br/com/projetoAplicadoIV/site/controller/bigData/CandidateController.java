@@ -1,6 +1,6 @@
 package br.com.projetoAplicadoIV.site.controller.bigData;
 
-import br.com.projetoAplicadoIV.site.entity.dto.bigData.candidate.*;
+import br.com.projetoAplicadoIV.site.entity.dto.bigData.*;
 import br.com.projetoAplicadoIV.site.service.bigData.CandidateService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;

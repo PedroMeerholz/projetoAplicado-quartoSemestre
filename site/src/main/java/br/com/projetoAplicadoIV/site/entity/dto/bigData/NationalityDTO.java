@@ -1,4 +1,4 @@
-package br.com.projetoAplicadoIV.site.entity.dto.bigData.candidate;
+package br.com.projetoAplicadoIV.site.entity.dto.bigData;
 
 public class NationalityDTO extends BigDataDTO {
     private String nationality;
