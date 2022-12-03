@@ -1,6 +1,6 @@
 package br.com.projetoAplicadoIV.site.service.bigData;
 
-import br.com.projetoAplicadoIV.site.entity.bigData.Candidate;
+import br.com.projetoAplicadoIV.site.entity.dto.bigData.NationalityDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.bigData.PositionDTO;
 import br.com.projetoAplicadoIV.site.repository.bigData.CandidateRepository;
 import br.com.projetoAplicadoIV.site.service.TokenService;
@@ -31,7 +31,7 @@ public class CandidateService {
 
     private List<PositionDTO> stringPositionToDTO(List<String> positions) {
         List<PositionDTO> positionDTOS = new ArrayList<PositionDTO>();
-        for(int i=0; i< positions.size();i++) {
+        for(int i=0; i<positions.size();i++) {
             PositionDTO positionDTO = new PositionDTO();
             String position = positions.get(i);
             String[] positionAndQuantity = position.split(",");
@@ -40,5 +40,28 @@ public class CandidateService {
             positionDTOS.add(positionDTO);
         }
         return positionDTOS;
+    }
+
+    public List<NationalityDTO> candidateNationality(String token, String cpf) {
+        if(tokenService.verifyToken(cpf, token)) {
+            if(candidateRepository.groupbyNationality().isPresent()) {
+                List<String> nationalities = candidateRepository.groupbyNationality().get();
+                return stringNationalityToDTO(nationalities);
+            }
+        }
+        return new ArrayList<NationalityDTO>();
+    }
+
+    private List<NationalityDTO> stringNationalityToDTO(List<String> nationalities) {
+        List<NationalityDTO> nationalityDTOS = new ArrayList<NationalityDTO>();
+        for(int i=0; i< nationalities.size();i++) {
+            NationalityDTO nationalityDTO = new NationalityDTO();
+            String nationality = nationalities.get(i);
+            String[] nationalityAndQuantity = nationality.split(",");
+            nationalityDTO.setNationality(nationalityAndQuantity[0]);
+            nationalityDTO.setQuantity(Integer.valueOf(nationalityAndQuantity[1]));
+            nationalityDTOS.add(nationalityDTO);
+        }
+        return nationalityDTOS;
     }
 }

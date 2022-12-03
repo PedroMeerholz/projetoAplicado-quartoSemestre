@@ -1,5 +1,6 @@
 package br.com.projetoAplicadoIV.site.controller.bigData;
 
+import br.com.projetoAplicadoIV.site.entity.dto.bigData.NationalityDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.bigData.PositionDTO;
 import br.com.projetoAplicadoIV.site.service.bigData.CandidateService;
 import org.springframework.http.HttpHeaders;
@@ -19,5 +20,10 @@ public class CandidateController {
     @GetMapping("/position/{cpf}")
     public List<PositionDTO> getCandidatePosition(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("cpf") String cpf) {
         return candidateService.candidatePosition(token, cpf);
+    }
+
+    @GetMapping("/nationality/{cpf}")
+    public List<NationalityDTO> getCandidateNationality(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("cpf") String cpf) {
+        return candidateService.candidateNationality(token, cpf);
     }
 }
