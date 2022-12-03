@@ -1,4 +1,4 @@
-package br.com.projetoAplicadoIV.site.entity.dto.bigData;
+package br.com.projetoAplicadoIV.site.entity.dto.bigData.candidate;
 
 public class ScholarityDTO extends BigDataDTO {
     private String scholarity;

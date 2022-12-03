@@ -1,6 +1,6 @@
 package br.com.projetoAplicadoIV.site.service.bigData;
 
-import br.com.projetoAplicadoIV.site.entity.dto.bigData.*;
+import br.com.projetoAplicadoIV.site.entity.dto.bigData.candidate.*;
 import br.com.projetoAplicadoIV.site.repository.bigData.CandidateRepository;
 import br.com.projetoAplicadoIV.site.service.TokenService;
 import org.springframework.stereotype.Service;
