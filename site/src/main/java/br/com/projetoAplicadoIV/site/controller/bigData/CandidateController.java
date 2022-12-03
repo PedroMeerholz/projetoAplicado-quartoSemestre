@@ -1,9 +1,6 @@
 package br.com.projetoAplicadoIV.site.controller.bigData;
 
-import br.com.projetoAplicadoIV.site.entity.dto.bigData.CandidatureSituationDTO;
-import br.com.projetoAplicadoIV.site.entity.dto.bigData.GenderDTO;
-import br.com.projetoAplicadoIV.site.entity.dto.bigData.NationalityDTO;
-import br.com.projetoAplicadoIV.site.entity.dto.bigData.PositionDTO;
+import br.com.projetoAplicadoIV.site.entity.dto.bigData.*;
 import br.com.projetoAplicadoIV.site.service.bigData.CandidateService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +34,10 @@ public class CandidateController {
     @GetMapping("/situation/{cpf}")
     public List<CandidatureSituationDTO> getCandidateSituation(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("cpf") String cpf) {
         return candidateService.candidateSituation(token, cpf);
+    }
+
+    @GetMapping("/scholarity/{cpf}")
+    public List<ScholarityDTO> getCandidateScholarity(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("cpf") String cpf) {
+        return candidateService.candidateScholarity(token, cpf);
     }
 }

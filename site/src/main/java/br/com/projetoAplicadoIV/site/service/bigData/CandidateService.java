@@ -1,9 +1,6 @@
 package br.com.projetoAplicadoIV.site.service.bigData;
 
-import br.com.projetoAplicadoIV.site.entity.dto.bigData.CandidatureSituationDTO;
-import br.com.projetoAplicadoIV.site.entity.dto.bigData.GenderDTO;
-import br.com.projetoAplicadoIV.site.entity.dto.bigData.NationalityDTO;
-import br.com.projetoAplicadoIV.site.entity.dto.bigData.PositionDTO;
+import br.com.projetoAplicadoIV.site.entity.dto.bigData.*;
 import br.com.projetoAplicadoIV.site.repository.bigData.CandidateRepository;
 import br.com.projetoAplicadoIV.site.service.TokenService;
 import org.springframework.stereotype.Service;
@@ -111,5 +108,28 @@ public class CandidateService {
             candidatureSituationDTOS.add(candidatureSituationDTO);
         }
         return candidatureSituationDTOS;
+    }
+
+    public List<ScholarityDTO> candidateScholarity(String token, String cpf) {
+        if(tokenService.verifyToken(cpf, token)) {
+            if(candidateRepository.groupByScholarity().isPresent()) {
+                List<String> schooling = candidateRepository.groupByScholarity().get();
+                return stringScholarityToDTO(schooling);
+            }
+        }
+        return new ArrayList<ScholarityDTO>();
+    }
+
+    private List<ScholarityDTO> stringScholarityToDTO(List<String> schooling) {
+        List<ScholarityDTO> schoolingDTOS = new ArrayList<ScholarityDTO>();
+        for(int i=0;i< schooling.size();i++) {
+            ScholarityDTO scholarityDTO = new ScholarityDTO();
+            String scholarity = schooling.get(i);
+            String[] scholarityAndQuantity = scholarity.split(",");
+            scholarityDTO.setScholarity(scholarityAndQuantity[0]);
+            scholarityDTO.setQuantity(Integer.valueOf(scholarityAndQuantity[1]));
+            schoolingDTOS.add(scholarityDTO);
+        }
+        return schoolingDTOS;
     }
 }
