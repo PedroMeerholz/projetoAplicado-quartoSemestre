@@ -1,5 +1,6 @@
 package br.com.projetoAplicadoIV.site.controller.bigData;
 
+import br.com.projetoAplicadoIV.site.entity.dto.bigData.CandidatureSituationDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.bigData.GenderDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.bigData.NationalityDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.bigData.PositionDTO;
@@ -31,5 +32,10 @@ public class CandidateController {
     @GetMapping("/gender/{cpf}")
     public List<GenderDTO> getCandidateGender(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("cpf") String cpf) {
         return candidateService.candidateGender(token, cpf);
+    }
+
+    @GetMapping("/situation/{cpf}")
+    public List<CandidatureSituationDTO> getCandidateSituation(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("cpf") String cpf) {
+        return candidateService.candidateSituation(token, cpf);
     }
 }

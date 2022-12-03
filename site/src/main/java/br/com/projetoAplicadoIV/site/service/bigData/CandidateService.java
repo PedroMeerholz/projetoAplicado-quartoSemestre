@@ -1,5 +1,6 @@
 package br.com.projetoAplicadoIV.site.service.bigData;
 
+import br.com.projetoAplicadoIV.site.entity.dto.bigData.CandidatureSituationDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.bigData.GenderDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.bigData.NationalityDTO;
 import br.com.projetoAplicadoIV.site.entity.dto.bigData.PositionDTO;
@@ -87,5 +88,28 @@ public class CandidateService {
             gendersDTOS.add(genderDTO);
         }
         return gendersDTOS;
+    }
+
+    public List<CandidatureSituationDTO> candidateSituation(String token, String cpf) {
+        if(tokenService.verifyToken(cpf, token)) {
+            if(candidateRepository.groupByCandidatureSituation().isPresent()) {
+                List<String> candidatureSituations = candidateRepository.groupByCandidatureSituation().get();
+                return stringCandidatureSituationToDTO(candidatureSituations);
+            }
+        }
+        return new ArrayList<CandidatureSituationDTO>();
+    }
+
+    private List<CandidatureSituationDTO> stringCandidatureSituationToDTO(List<String> situations) {
+        List<CandidatureSituationDTO> candidatureSituationDTOS = new ArrayList<CandidatureSituationDTO>();
+        for(int i=0;i<situations.size();i++) {
+            CandidatureSituationDTO candidatureSituationDTO = new CandidatureSituationDTO();
+            String situation = situations.get(i);
+            String[] situationAndQuantity = situation.split(",");
+            candidatureSituationDTO.setSituation(situationAndQuantity[0]);
+            candidatureSituationDTO.setQuantity(Integer.valueOf(situationAndQuantity[1]));
+            candidatureSituationDTOS.add(candidatureSituationDTO);
+        }
+        return candidatureSituationDTOS;
     }
 }
