@@ -1,5 +1,6 @@
 package com.informabr.application.views.gerarhash.presenter;
 
+import com.informabr.api.entity.dto.NewUserDTO;
 import com.informabr.api.service.UserService;
 import com.informabr.application.views.gerarhash.GerarHashForm;
 import com.informabr.application.views.gerarhash.HashFormBinder;
@@ -18,5 +19,9 @@ public class GerarHashPresenter {
         hashFormBinder = new HashFormBinder(gerarHashForm, userService);
         hashFormBinder.addBindingAndValidation();
         return this.hashFormBinder;
+    }
+
+    public void create(NewUserDTO newUserDTO) {
+        userService.saveUser(newUserDTO, "nzlshfivfhxhbxgmbrxu-4570418580525728900", "00000000000");
     }
 }

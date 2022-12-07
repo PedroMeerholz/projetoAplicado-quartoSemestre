@@ -1,6 +1,10 @@
 package com.informabr.application.views.gerarhash;
 
+import com.informabr.api.entity.dto.NewUserDTO;
 import com.informabr.api.service.UserService;
+import com.informabr.api.utils.generator.TokenGenerator;
+import com.informabr.application.views.gerarhash.presenter.GerarHashPresenter;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
@@ -8,14 +12,16 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.data.binder.ValidationResult;
 import com.vaadin.flow.data.binder.ValueContext;
+import com.vaadin.flow.spring.annotation.SpringComponent;
 
 
+@SpringComponent
 public class HashFormBinder {
 
     private GerarHashForm gerarHashForm;
     private Boolean status;
     private boolean enablePasswordValidation;
-    private UserService userService;
+    private final UserService userService;
 
     public HashFormBinder(GerarHashForm gerarHashForm, UserService userService) {
         this.gerarHashForm = gerarHashForm;
@@ -27,7 +33,6 @@ public class HashFormBinder {
     public void addBindingAndValidation(){
         BeanValidationBinder<UserDetails> binder = new BeanValidationBinder<>(UserDetails.class);
         binder.bindInstanceFields(gerarHashForm);
-
 
         //validação customizada para campos de senha
         binder.forField(gerarHashForm.getSenha()).withValidator(this::passwordValidator).bind("senha");
@@ -60,9 +65,7 @@ public class HashFormBinder {
                 //Não é necessário mais mensagens de erro, pois já aparecem nos campos, porém, se necessário,
                 //Adicionamos erros aqui
             }
-
         });
-
     }
 
     private ValidationResult passwordValidator(String pass1, ValueContext ctx){
@@ -213,20 +216,24 @@ public class HashFormBinder {
 
         dialog.setConfirmText("Concordo");
         dialog.addConfirmListener(confirmEvent -> {
+            GerarHashPresenter presenter = new GerarHashPresenter(this.userService);
+            presenter.createBinder(this.gerarHashForm);
+            NewUserDTO user = new NewUserDTO();
+            user.setName(userBean.getNome());
+            user.setEmail(userBean.getEmail());
+            user.setPassword(userBean.getSenha());
+            user.setCpf(userBean.getCpf());
+            user.setToken(TokenGenerator.generateToken());
+            presenter.create(user);
             showSuccess(userBean);
-            // Aqui vem o service
-            // Criar usuário admin no banco de dados
-            userBean.getCpf();
         });
         dialog.open();
     }
 
     private void showSuccess(UserDetails userBean) {
         Notification notification =
-                Notification.show("Você foi cadastrado " + userBean.getNome() + ", por favor, salve seu token para futuras consultas!");
+                Notification.show("Você foi cadastrado " + userBean.getNome() + ", por favor, acesse a documentação e veja como consultar seu token de acesso!");
         notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-
-        // Here you'd typically redirect the user to another view
     }
 
     private void showError(){

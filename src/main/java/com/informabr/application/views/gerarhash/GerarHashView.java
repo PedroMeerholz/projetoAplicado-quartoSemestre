@@ -11,8 +11,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 
-@PageTitle("Gerar Hash")
-@Route(value = "gerar-hash", layout = MainLayout.class)
+@PageTitle("Cadastro")
+@Route(value = "cadastro", layout = MainLayout.class)
 @Uses(Icon.class)
 public class GerarHashView extends VerticalLayout {
     private final GerarHashPresenter gerarHashPresenter;
@@ -37,6 +37,6 @@ public class GerarHashView extends VerticalLayout {
     }
 
     private Component createTitle() {
-        return new H3("Cadastre uma chave para acessar os endpoints");
+        return new H3("Realize seu cadastro para ter acesso aos endpoints da nossa API");
     }
 }

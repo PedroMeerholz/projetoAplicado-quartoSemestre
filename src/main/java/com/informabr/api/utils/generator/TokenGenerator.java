@@ -1,7 +1,10 @@
 package com.informabr.api.utils.generator;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Random;
 
+@Component
 public class TokenGenerator {
 
     private static Long generateLong() {

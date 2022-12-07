@@ -54,7 +54,7 @@ public class MainLayout extends AppLayout {
         AppNav nav = new AppNav();
 
         nav.addItem(new AppNavItem("PowerBI", PowerBIView.class, "la la-chart-bar"));
-        nav.addItem(new AppNavItem("Gerar Hash", GerarHashView.class, "la la-key"));
+        nav.addItem(new AppNavItem("Cadastro", GerarHashView.class, "la la-key"));
 
         return nav;
     }
