@@ -4,6 +4,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -27,6 +28,8 @@ public class GerarHashForm extends FormLayout {
 
     private Button cancel;
     private Button save;
+
+    private Label hash;
 
 
     public GerarHashForm(){
@@ -54,6 +57,7 @@ public class GerarHashForm extends FormLayout {
         save.setAutofocus(true);
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
+        hash = new Label("Seu hash:");
         add(nome, email, cpf, email, senha,
                 confirmarsenha, errorMessageField,save ,cancel);
 
@@ -69,7 +73,6 @@ public class GerarHashForm extends FormLayout {
         setColspan(cancel, 2);
         setColspan(save, 2);
     }
-
 
     public Button getSave() {
         return save;

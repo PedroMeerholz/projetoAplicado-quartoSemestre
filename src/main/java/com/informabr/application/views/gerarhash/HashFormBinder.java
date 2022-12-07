@@ -1,5 +1,6 @@
 package com.informabr.application.views.gerarhash;
 
+import com.informabr.api.service.UserService;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
@@ -8,18 +9,17 @@ import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.data.binder.ValidationResult;
 import com.vaadin.flow.data.binder.ValueContext;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HashFormBinder {
 
     private GerarHashForm gerarHashForm;
     private Boolean status;
-
-
     private boolean enablePasswordValidation;
+    private UserService userService;
 
-    public HashFormBinder(GerarHashForm gerarHashForm) {
+    public HashFormBinder(GerarHashForm gerarHashForm, UserService userService) {
         this.gerarHashForm = gerarHashForm;
+        this.userService = userService;
     }
 
     //Método que adiciona as lógicas de validação do formulário
@@ -214,13 +214,16 @@ public class HashFormBinder {
         dialog.setConfirmText("Concordo");
         dialog.addConfirmListener(confirmEvent -> {
             showSuccess(userBean);
+            // Aqui vem o service
+            // Criar usuário admin no banco de dados
+            userBean.getCpf();
         });
         dialog.open();
     }
 
     private void showSuccess(UserDetails userBean) {
         Notification notification =
-                Notification.show("Hash cadastrado " + userBean.getNome() + ", por favor, salve ele para futuras consultas!");
+                Notification.show("Você foi cadastrado " + userBean.getNome() + ", por favor, salve seu token para futuras consultas!");
         notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
 
         // Here you'd typically redirect the user to another view
