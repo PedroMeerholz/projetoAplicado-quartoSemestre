@@ -12,7 +12,7 @@ import com.vaadin.flow.router.Route;
 
 
 @PageTitle("Cadastro")
-@Route(value = "cadastro", layout = MainLayout.class)
+@Route(value = "/cadastro", layout = MainLayout.class)
 @Uses(Icon.class)
 public class GerarHashView extends VerticalLayout {
     private final GerarHashPresenter gerarHashPresenter;

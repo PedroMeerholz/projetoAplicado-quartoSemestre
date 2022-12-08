@@ -2,7 +2,9 @@ package com.informabr.api.controller.bigData;
 
 import com.informabr.api.entity.dto.bigData.*;
 import com.informabr.api.service.bigData.CandidateService;
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

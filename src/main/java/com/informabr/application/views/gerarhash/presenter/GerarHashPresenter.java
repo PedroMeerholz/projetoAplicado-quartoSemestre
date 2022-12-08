@@ -21,7 +21,12 @@ public class GerarHashPresenter {
         return this.hashFormBinder;
     }
 
-    public void create(NewUserDTO newUserDTO) {
-        userService.saveUser(newUserDTO, "nzlshfivfhxhbxgmbrxu-4570418580525728900", "00000000000");
+    public boolean create(NewUserDTO newUserDTO) {
+        String saveUser = userService.saveUser(newUserDTO, "nzlshfivfhxhbxgmbrxu-4570418580525728900", "00000000000");
+        if(saveUser.equals("Successfully created user.")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
