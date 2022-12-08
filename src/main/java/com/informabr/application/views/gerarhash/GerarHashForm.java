@@ -28,7 +28,6 @@ public class GerarHashForm extends FormLayout {
 
     private Span errorMessageField;
 
-    private Button cancel;
     private Button save;
 
     private Label hash;
@@ -52,8 +51,6 @@ public class GerarHashForm extends FormLayout {
 
         errorMessageField = new Span();
 
-        cancel = new Button("Limpar");
-
         save = new Button("Cadastrar",
                 new Icon(VaadinIcon.KEY));
         save.setAutofocus(true);
@@ -61,7 +58,7 @@ public class GerarHashForm extends FormLayout {
 
         hash = new Label("Seu hash:");
         add(nome, email, cpf, email, senha,
-                confirmarsenha, errorMessageField,save ,cancel);
+                confirmarsenha, errorMessageField,save);
 
         setMaxWidth("500px");
 
@@ -72,7 +69,6 @@ public class GerarHashForm extends FormLayout {
         // These components always take full width
         setColspan(email, 2);
         setColspan(errorMessageField, 2);
-        setColspan(cancel, 2);
         setColspan(save, 2);
     }
 

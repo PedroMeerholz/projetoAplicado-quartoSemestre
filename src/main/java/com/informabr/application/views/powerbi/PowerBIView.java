@@ -33,7 +33,7 @@ public class PowerBIView extends Main implements HasComponents, HasStyle {
         imageContainer.add(new PowerBIViewCard("Candidatos",
                 "https://i.postimg.cc/8zGZSHsg/Candidatos.jpg","Candidatos", "Gráficos que ajudam o entendimento dos candidatos", "window.open('https://app.powerbi.com/view?r=eyJrIjoiNjEyYTNhZjgtNjRmOC00MzJlLTg0MDUtNjcwOGRiZDgxODBmIiwidCI6IjJjZjdkNGQ1LWJkMWItNDk1Ni1hY2Y4LTI5OTUzOTliMjE2OCJ9');"));
         imageContainer.add(new PowerBIViewCard("Documentação Swagger",
-                "https://i.postimg.cc/K85JvMgk/sw-agger.png", "Documentação Swagger", "Caso possua alguma dúvida em relação ao uso do Swagger, obtenha ajuda aqui", "window.open('https://swagger.io/docs/specification/about/');"));
+                "https://i.postimg.cc/K85JvMgk/sw-agger.png", "Documentação Swagger", "Caso possua alguma dúvida em relação ao uso do Swagger, obtenha ajuda aqui", "window.open('http://localhost:8080/swagger-ui.html');"));
     }
 
     private void constructUI() {

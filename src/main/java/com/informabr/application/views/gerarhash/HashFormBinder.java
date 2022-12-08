@@ -46,6 +46,7 @@ public class HashFormBinder {
 
         binder.setStatusLabel(gerarHashForm.getErrorMessageField());
 
+
         gerarHashForm.getSave().addClickListener(event -> {
             try{
                 //Bean vazio para adicionar os dados dentro
@@ -224,8 +225,13 @@ public class HashFormBinder {
             user.setPassword(userBean.getSenha());
             user.setCpf(userBean.getCpf());
             user.setToken(TokenGenerator.generateToken());
-            presenter.create(user);
-            showSuccess(userBean);
+            boolean create = presenter.create(user);
+            if(create) {
+                showSuccess(userBean);
+            } else {
+                showRegisterError();
+            }
+
         });
         dialog.open();
     }
@@ -240,5 +246,12 @@ public class HashFormBinder {
         Notification notification =
                 Notification.show("Você precisa aceitar os termos para se cadastrar");
         notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+        notification.setDuration(7000);
+    }
+
+    private void showRegisterError() {
+        Notification notification = Notification.show("Erro ao cadastrar | Verifique suas credenciais");
+        notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+        notification.setDuration(7000);
     }
 }
