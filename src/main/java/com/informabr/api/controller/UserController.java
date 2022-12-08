@@ -1,13 +1,11 @@
 package com.informabr.api.controller;
 
+import com.informabr.api.entity.dto.GetTokenDTO;
 import com.informabr.api.entity.dto.GetUserDTO;
 import com.informabr.api.entity.dto.NewUserDTO;
 import com.informabr.api.entity.dto.UpdateUserDTO;
 import com.informabr.api.service.UserService;
-import io.swagger.annotations.Api;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,6 +29,11 @@ public class UserController {
     @GetMapping(value="/get/{cpf}", produces = "application/json")
     public GetUserDTO getUser(@PathVariable("cpf") String cpf, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         return userService.getUser(cpf, token);
+    }
+
+    @GetMapping(value="/get/token/{cpf}", produces = "application/json")
+    public String getToken(@PathVariable("cpf") String cpf) {
+        return userService.getToken(cpf);
     }
 
     @DeleteMapping("/delete/{cpf}")

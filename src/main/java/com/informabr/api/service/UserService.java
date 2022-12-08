@@ -1,6 +1,7 @@
 package com.informabr.api.service;
 
 import com.informabr.api.entity.User;
+import com.informabr.api.entity.dto.GetTokenDTO;
 import com.informabr.api.entity.dto.GetUserDTO;
 import com.informabr.api.entity.dto.NewUserDTO;
 import com.informabr.api.entity.dto.UpdateUserDTO;
@@ -90,6 +91,10 @@ public class UserService {
             }
         }
         return new GetUserDTO();
+    }
+
+    public String getToken(String cpf) {
+        return tokenService.getToken(cpf);
     }
 
     public String deleteUser(String cpf, String token) {
